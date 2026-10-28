@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Фрунзе 212</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;800&family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: dark concrete hero band, then light "yard" sections; catalog with tabs, calculator, steps, contacts */
+:root{
+  --bg:#E9ECF1; --surface:#F8F9FB; --ink:#17213A; --muted:#566179; --line:#C9D0DC;
+  --accent:#2C4E8F; --accent-ink:#FFFFFF; --band:#1B2F57; --band-ink:#EEF2F9; --band-muted:#A9B6CF; --band-accent:#8FB2F0;
+  --ok:#2F7D4F;
+  --f-display:"Unbounded","Arial Black",system-ui,sans-serif;
+  --f-body:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace;
+  --gut-l:max(16px, env(safe-area-inset-left,0px)); --gut-r:max(16px, env(safe-area-inset-right,0px));
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#10151F; --surface:#19202D; --ink:#E6EAF2; --muted:#98A3B8; --line:#2D3646;
+  --accent:#7FA2E6; --accent-ink:#0D1830; --band:#0B1426; --band-ink:#EEF2F9; --band-muted:#A9B6CF; --ok:#5DBB83; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#10151F; --surface:#19202D; --ink:#E6EAF2; --muted:#98A3B8; --line:#2D3646;
+  --accent:#7FA2E6; --accent-ink:#0D1830; --band:#0B1426; --band-ink:#EEF2F9; --band-muted:#A9B6CF; --ok:#5DBB83; color-scheme:dark}
+
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 var(--f-body);overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:60;background:var(--band)}
+h1,h2,h3{font-family:var(--f-display);line-height:1.1;text-wrap:balance;margin:0}
+h2{font-size:clamp(26px,4vw,40px);font-weight:700;letter-spacing:-.01em}
+h3{font-size:18px;font-weight:700}
+p{margin:0}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:var(--gut-l);padding-right:var(--gut-r)}
+.eyebrow{font:600 12px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.btn{display:inline-flex;align-items:center;gap:8px;font:600 15px/1 var(--f-body);padding:15px 22px;border-radius:4px;border:2px solid transparent;cursor:pointer;text-decoration:none;transition:transform .15s,background .15s}
+.btn-acc{background:var(--accent);color:var(--accent-ink)}
+.btn-acc:hover{transform:translateY(-2px)}
+.btn-ghost{background:transparent;border-color:currentColor}
+.btn-ghost:hover{background:color-mix(in srgb,currentColor 10%,transparent)}
+
+/* header */
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;background:var(--band);color:var(--band-ink);border-bottom:1px solid #ffffff14}
+.hdr{display:flex;align-items:center;gap:24px;padding-block:14px}
+.logo{display:flex;align-items:center;gap:10px;text-decoration:none;font:800 17px/1 var(--f-display);letter-spacing:.02em}
+.logo svg{width:38px;height:38px;flex:none}
+.logo span small{display:block;font:500 10px/1.3 var(--f-body);letter-spacing:.04em;color:var(--band-muted);margin-top:3px}
+nav{display:flex;gap:22px;margin-left:auto}
+nav a{text-decoration:none;font-size:14px;color:var(--band-muted)}
+nav a:hover{color:var(--band-ink)}
+.hdr-tg{display:grid;place-items:center;flex:none}
+.hdr-tg svg{width:30px;height:30px}
+.hdr-phone{font:600 15px/1.2 var(--f-mono);text-decoration:none;white-space:nowrap}
+.hdr-phone small{display:block;font:400 11px/1.2 var(--f-body);color:var(--band-muted)}
+@media (max-width:860px){nav{display:none}.hdr-tg{margin-left:auto}}
+@media (max-width:480px){.hdr{gap:12px}.logo{font-size:14px}.logo span small{display:none}.logo svg{width:32px;height:32px}.hdr-phone{font-size:13px}.hdr-phone small{display:none}}
+[hidden]{display:none!important}
+
+/* hero */
+.hero{background:var(--band);color:var(--band-ink);overflow:hidden;position:relative}
+.hero-bg{position:absolute;inset:0;opacity:.32;pointer-events:none}
+.hero-bg svg{width:100%;height:100%;display:block}
+.hero-bg::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,var(--band) 30%,color-mix(in srgb,var(--band) 40%,transparent) 75%,transparent)}
+.hero .wrap{position:relative;z-index:1}
+@media (max-width:860px){.hero-bg::after{background:linear-gradient(180deg,var(--band) 45%,color-mix(in srgb,var(--band) 50%,transparent))}}
+.hero .wrap{display:grid;grid-template-columns:1.05fr 1fr;gap:40px;align-items:center;padding-block:64px 0}
+.hero h1{font-size:clamp(32px,5.4vw,64px);font-weight:800;letter-spacing:-.02em}
+.hero h1 em{font-style:normal;color:var(--band-accent)}
+.hero .btn-acc{background:var(--band-ink);color:var(--band)}
+.hero-lead{margin-top:20px;font-size:18px;color:var(--band-muted);max-width:34em}
+.hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hero-facts{display:flex;flex-wrap:wrap;gap:28px;margin-top:40px;padding-block:22px 48px;border-top:1px solid #ffffff1f}
+.hero-facts b{display:block;font:700 26px/1 var(--f-display);color:var(--band-ink)}
+.hero-facts span{font-size:13px;color:var(--band-muted)}
+.hero-art{position:relative;align-self:center;min-width:0;padding-bottom:48px}
+.hero-photo{display:block;width:100%;aspect-ratio:4/3;max-width:100%;object-fit:cover;border-radius:6px;box-shadow:0 20px 50px #0006}
+.hero-photo-sm{position:absolute;left:-28px;bottom:0;width:38%;aspect-ratio:3/4;object-fit:cover;border-radius:6px;border:4px solid var(--band);box-shadow:0 12px 30px #0007}
+@media (max-width:860px){.hero-photo-sm{left:8px}}
+.hero-tag{position:absolute;right:4%;top:6%;background:var(--band-ink);color:var(--band);font:600 12px/1.3 var(--f-mono);padding:10px 12px;border-radius:3px;transform:rotate(3deg)}
+@media (max-width:860px){.hero .wrap{grid-template-columns:1fr;padding-block:40px 0}.hero-facts{padding-bottom:8px}}
+
+section{padding-block:80px}
+.sec-head{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:16px 40px;margin-bottom:36px}
+.sec-head p{color:var(--muted);max-width:36em}
+.sec-head .eyebrow{margin-bottom:12px}
+
+/* tabs + catalog */
+.tabs{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:4px;gap:4px;flex-wrap:wrap}
+.tabs button{font:600 14px/1 var(--f-body);padding:12px 18px;border:0;border-radius:4px;background:transparent;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--ink);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:980px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:620px){.grid{grid-template-columns:1fr}}
+.pgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:980px){.pgrid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:640px){.pgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}}
+.pcard{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;min-width:0}
+.pz{display:block;padding:0;border:0;background:var(--line);cursor:zoom-in;width:100%}
+.pz img{display:block;width:100%;aspect-ratio:var(--ar,1/1);max-width:100%;object-fit:cover}
+.pb{padding:12px 14px 14px;display:flex;flex-direction:column;gap:5px;flex:1;min-width:0}
+.pt{font-weight:600;font-size:15px;line-height:1.3}
+.pt b{font-family:var(--f-display);font-weight:700;color:var(--accent);margin-right:6px}
+.ps{font:400 12px/1.45 var(--f-mono);color:var(--muted);overflow-wrap:anywhere}
+.pp{margin-top:auto;padding-top:10px;display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;border-top:1px dashed var(--line)}
+.pp .price{font-size:17px}
+.subhead{grid-column:1/-1;display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-top:18px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
+.subhead:first-child{margin-top:0}
+.subhead h3{font-size:18px}
+.subhead span{font-size:13px;color:var(--muted)}
+.more{margin-top:20px;display:flex;justify-content:center}
+.btn-line{background:transparent;color:var(--ink);border:2px solid var(--line)}
+.btn-line:hover{border-color:var(--accent)}
+.works-sec{background:var(--surface);border-block:1px solid var(--line)}
+.works-sec .pcard{background:var(--bg)}
+dialog#lb{border:0;padding:0;background:transparent;max-width:min(96vw,1000px);max-height:96vh;color:#fff}
+dialog#lb::backdrop{background:#0b1220e6}
+#lb img{display:block;max-width:100%;max-height:82vh;margin:0 auto;border-radius:4px}
+#lb p{margin:10px 4px 0;font-size:15px;text-align:center}
+#lb .lbx{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:calc(12px + env(safe-area-inset-right,0px));width:44px;height:44px;border-radius:50%;border:0;background:#fff;color:#111;font:700 22px/1 var(--f-body);cursor:pointer}
+#lb .lbn{position:fixed;top:50%;width:44px;height:44px;border-radius:50%;border:0;background:#ffffffd9;color:#111;font:700 22px/1 var(--f-body);cursor:pointer;transform:translateY(-50%)}
+#lb .prev{left:calc(10px + env(safe-area-inset-left,0px))}#lb .next{right:calc(10px + env(safe-area-inset-right,0px))}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:6px;overflow:hidden;display:flex;flex-direction:column}
+.card .pic{background:color-mix(in srgb,var(--ink) 6%,var(--surface));aspect-ratio:16/10;max-width:100%;display:grid;place-items:center;padding:14px;border-bottom:1px solid var(--line)}
+.card .pic svg{width:100%;height:100%}
+.card .body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.spec{font:400 12px/1.5 var(--f-mono);color:var(--muted)}
+.card p.d{font-size:14px;color:var(--muted)}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.sw{width:24px;height:24px;border-radius:50%;border:2px solid var(--surface);box-shadow:0 0 0 1px var(--line);cursor:pointer;padding:0}
+.sw[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
+.price-row{margin-top:auto;display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-top:12px;border-top:1px dashed var(--line)}
+.price{font:700 20px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.price small{font:400 12px var(--f-body);color:var(--muted)}
+.link-btn{background:none;border:0;padding:0;font:600 14px var(--f-body);color:var(--ink);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:2px;text-underline-offset:4px;cursor:pointer}
+.note{font-size:13px;color:var(--muted);margin-top:18px}
+
+/* calculator */
+.calc-sec{background:var(--surface);border-block:1px solid var(--line)}
+.calc{display:grid;grid-template-columns:1.2fr 1fr;gap:28px;align-items:start}
+@media (max-width:860px){.calc{grid-template-columns:1fr}}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media (max-width:520px){.fields{grid-template-columns:1fr}}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+.field.full{grid-column:1/-1}
+label,.lbl{font-size:13px;font-weight:600;color:var(--muted)}
+input,select,textarea{font:400 16px var(--f-body);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:4px;padding:12px 12px;width:100%}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--accent);outline-offset:0;border-color:transparent}
+.check{display:flex;align-items:center;gap:10px;font-size:15px;color:var(--ink);font-weight:500;cursor:pointer}
+.check input{width:20px;height:20px;accent-color:var(--accent)}
+.logo-big{width:min(220px,60%);height:auto}
+.calc-hint{color:var(--muted);margin-bottom:16px;max-width:60ch}
+.calc-hint b{color:var(--ink)}
+.ftable{display:grid;gap:8px}
+.frow{display:grid;grid-template-columns:84px 1fr 1fr 110px;grid-template-areas:"h a n s";gap:10px 14px;align-items:center;background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px 14px}
+.frow.on{border-color:var(--accent)}
+.fhead{background:transparent;border:0;padding-block:0;font:600 11px/1.2 var(--f-mono);color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
+.frow>.fh{grid-area:h;font:700 17px/1 var(--f-display)}
+.fhead>.fh{font:inherit}
+.rline span:last-child{white-space:nowrap}
+.frow>.fa{grid-area:a}.frow>.fn{grid-area:n}
+.fsum{grid-area:s;text-align:right;font:600 14px var(--f-mono);font-variant-numeric:tabular-nums}
+.stp{display:flex;align-items:center;gap:6px;min-width:0;flex-wrap:wrap}
+.stp button{width:36px;height:36px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:4px;font:600 18px/1 var(--f-body);cursor:pointer;flex:none}
+.stp button:hover{border-color:var(--accent)}
+.stp input{width:60px;text-align:center;padding:7px 4px;font-variant-numeric:tabular-nums}
+.stp .cap{display:none}
+@media (max-width:620px){.fhead{display:none}.frow{grid-template-columns:1fr 1fr;grid-template-areas:"h s" "a n"}.stp .cap{display:block;width:100%;font-size:12px;color:var(--muted)}}
+.receipt{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:22px;font-family:var(--f-mono);font-size:14px}
+.receipt h3{font-family:var(--f-mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.rline{display:flex;justify-content:space-between;gap:12px;padding-block:7px;border-bottom:1px dashed var(--line);font-variant-numeric:tabular-nums}
+.rline span:first-child{color:var(--muted)}
+.rtotal{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-top:16px}
+.rtotal b{font:800 28px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.receipt .btn{width:100%;justify-content:center;margin-top:18px}
+
+/* about */
+.adv{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:2px solid var(--ink)}
+.adv div{padding:24px 22px 8px 0;display:flex;flex-direction:column;gap:8px}
+.adv div+div{padding-left:22px;border-left:1px solid var(--line)}
+.adv b{font:700 30px/1 var(--f-display);color:var(--accent)}
+.adv p{font-size:15px;color:var(--muted)}
+@media (max-width:760px){.adv{grid-template-columns:1fr}.adv div+div{padding-left:0;border-left:0;border-top:1px solid var(--line)}}
+
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:36px 24px;counter-reset:s}
+@media (max-width:860px){.steps{grid-template-columns:1fr 1fr}}
+@media (max-width:460px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding-top:56px}
+.step::before{counter-increment:s;content:counter(s);position:absolute;top:0;left:0;width:40px;height:40px;display:grid;place-items:center;background:var(--accent);color:var(--accent-ink);font:800 18px var(--f-display);border-radius:3px}
+
+.step h3{margin-bottom:8px}
+.step p{font-size:14px;color:var(--muted)}
+
+/* faq */
+.faq{display:grid;gap:10px;max-width:860px}
+details{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:0 20px}
+summary{cursor:pointer;padding-block:18px;font-weight:600;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:700 20px/1 var(--f-display);color:var(--muted)}
+details[open] summary::after{content:"–"}
+details p{padding-bottom:18px;color:var(--muted);max-width:65ch}
+
+/* contacts */
+.contact-sec{background:var(--band);color:var(--band-ink)}
+.contact-sec .eyebrow,.contact-sec .sec-head p{color:var(--band-muted)}
+.contacts{display:grid;grid-template-columns:1fr 1.1fr;gap:40px}
+@media (max-width:860px){.contacts{grid-template-columns:1fr}}
+.cinfo{display:grid;gap:22px;align-content:start}
+.cinfo dt{font:600 11px/1 var(--f-mono);letter-spacing:.14em;text-transform:uppercase;color:var(--band-muted);margin-bottom:6px}
+.cinfo dd{margin:0;font-size:18px}
+.cinfo .big{font:700 22px/1.2 var(--f-mono)}
+.cinfo a{color:var(--band-ink)}
+.tg{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:600}
+.tg svg{width:28px;height:28px}
+.copy{margin-left:10px;font:600 12px var(--f-body);color:var(--band-ink);background:transparent;border:1px solid #ffffff40;border-radius:3px;padding:4px 8px;cursor:pointer;vertical-align:middle}
+.cform{background:var(--surface);color:var(--ink);border-radius:6px;padding:26px;display:grid;gap:16px}
+.cform h3{font-size:20px}
+.cform .btn{justify-content:center}
+.sent{background:color-mix(in srgb,var(--ok) 12%,var(--surface));border:1px solid var(--ok);border-radius:4px;padding:14px;font-size:14px}
+.sent pre{white-space:pre-wrap;font:400 13px/1.5 var(--f-mono);margin:10px 0}
+footer{background:var(--band);color:var(--band-muted);font-size:13px;border-top:1px solid #ffffff14}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;padding-block:22px}
+</style>
+
+<header>
+  <div class="wrap hdr">
+    <a class="logo" href="#top"><svg viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#fff" stroke="#2C4E8F" stroke-width="4"/><circle cx="50" cy="50" r="39" fill="none" stroke="#8A8F96" stroke-width="2"/><g transform="rotate(45 50 50)" stroke="#2C4E8F" stroke-width="1.6"><rect x="28" y="28" width="11" height="22" fill="#fff"/><rect x="39" y="28" width="11" height="22" fill="#fff"/><rect x="50" y="28" width="22" height="11" fill="#2C4E8F" stroke="#fff"/><rect x="50" y="39" width="22" height="11" fill="#2C4E8F" stroke="#fff"/><rect x="28" y="50" width="22" height="11" fill="#2C4E8F" stroke="#fff"/><rect x="28" y="61" width="22" height="11" fill="#2C4E8F" stroke="#fff"/><rect x="50" y="50" width="11" height="22" fill="#fff"/><rect x="61" y="50" width="11" height="22" fill="#fff"/></g></svg><span>ФРУНЗЕ 212<small>Тротуарная плитка · Еврозабор</small></span></a>
+    <nav aria-label="Разделы">
+      <a href="#catalog">Каталог</a>
+      <a href="#about">О нас</a>
+      <a href="#works">Наши работы</a>
+      <a href="#calc">Калькулятор</a>
+      <a href="#zamer">Замеры</a>
+      <a href="#contacts">Как нас найти</a>
+    </nav>
+    <a class="hdr-tg" href="https://t.me/stroymaterial_Frunze212" target="_blank" rel="noopener" aria-label="Мы в Telegram" title="Мы в Telegram"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#EEF2F9"/><path d="M5.5 11.6l11.2-4.3c.5-.2 1 .1.8.9l-1.9 9c-.1.6-.5.8-1 .5l-2.9-2.1-1.4 1.3c-.2.2-.3.3-.6.3l.2-2.9 5.3-4.8c.2-.2 0-.3-.3-.1l-6.6 4.1-2.8-.9c-.6-.2-.6-.6.1-.9z" fill="#1B2F57"/></svg></a>
+    <a class="hdr-phone" href="tel:+79902876439">+7 (990) 287-64-39<small>г. Мелитополь, ул. Фрунзе, 212</small></a>
+  </div>
+</header>
+
+<div class="hero" id="top">
+  <div class="hero-bg" id="heroBg" aria-hidden="true"></div>
+  <div class="wrap">
+    <div>
+      <div class="eyebrow" style="color:var(--band-muted);margin-bottom:18px">Мелитополь · с 2016 года · собственное производство</div>
+      <h1>Тротуарная плитка и еврозаборы <em>от производителя</em></h1>
+      <p class="hero-lead">Делаем бетонные плиты, столбы и тротуарную плитку на своём производстве на ул. Фрунзе, 212. Продаём без посредников, привозим и устанавливаем под ключ.</p>
+      <div class="hero-cta">
+        <a class="btn btn-acc" href="#calc">Рассчитать стоимость</a>
+        <a class="btn btn-ghost" href="#catalog">Смотреть каталог</a>
+      </div>
+      <div class="hero-facts">
+        <div><b>с 2016</b><span>года работаем в Мелитополе</span></div>
+        <div><b>27 моделей</b><span>еврозабора, от 1 до 2,5 м</span></div>
+        <div><b>70+ видов</b><span>облицовочного кирпича</span></div>
+      </div>
+    </div>
+    <div class="hero-art">
+      <img class="hero-photo" src="img/286_3.jpg" alt="Двор, вымощенный тротуарной плиткой с ромбовидным узором, работа «Фрунзе 212»" width="800" height="600">
+      <div class="hero-tag">Наши работы<br>в Мелитополе</div>
+    </div>
+  </div>
+</div>
+
+<main>
+<section id="catalog">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Каталог продукции</div>
+        <h2>Что у нас есть</h2>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Категория" id="cat-tabs">
+        <button role="tab" aria-selected="true" data-panel="cat-fence">Еврозаборы</button>
+        <button role="tab" aria-selected="false" data-panel="cat-tile">Тротуарная плитка</button>
+        <button role="tab" aria-selected="false" data-panel="cat-brick">Облицовочный кирпич</button>
+        <button role="tab" aria-selected="false" data-panel="cat-mat">Стройматериалы</button>
+      </div>
+    </div>
+    <div class="pgrid" id="cat-fence" role="tabpanel"></div>
+    <div class="pgrid" id="cat-tile" role="tabpanel" hidden></div>
+    <div class="pgrid" id="cat-brick" role="tabpanel" hidden></div>
+    <div class="pgrid" id="cat-mat" role="tabpanel" hidden></div>
+    <p class="note" id="cat-note">Цены ориентировочные, с производства, без доставки. Опт — цена договорная. Точную стоимость уточняйте по телефону.</p>
+  </div>
+</section>
+
+<section id="works" class="works-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Фото</div>
+        <h2>Наши работы</h2>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Работы" id="work-tabs">
+        <button role="tab" aria-selected="true" data-panel="w-tile">Укладка плитки</button>
+        <button role="tab" aria-selected="false" data-panel="w-paint">Покраска еврозаборов</button>
+        <button role="tab" aria-selected="false" data-panel="w-brick">Из облицовочного кирпича</button>
+      </div>
+    </div>
+    <div id="w-tile" role="tabpanel"><div class="pgrid"></div><div class="more"><button class="btn btn-line" type="button">Показать ещё</button></div></div>
+    <div id="w-paint" role="tabpanel" hidden><div class="pgrid"></div></div>
+    <div id="w-brick" role="tabpanel" hidden><p class="note" style="margin:0 0 16px">Идеи того, что можно построить из облицовочного кирпича: заборы, мангалы, клумбы.</p><div class="pgrid"></div></div>
+  </div>
+</section>
+
+<section id="calc" class="calc-sec">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="eyebrow">Онлайн-расчёт</div>
+        <h2>Калькулятор стоимости</h2>
+      </div>
+      <div class="tabs" role="tablist" aria-label="Что считаем">
+        <button role="tab" id="ctab-fence" aria-selected="true">Забор</button>
+        <button role="tab" id="ctab-tile" aria-selected="false">Плитка</button>
+      </div>
+    </div>
+    <div class="calc">
+      <div>
+        <div id="calc-fence">
+          <p class="calc-hint"><b>Один пролёт — 2 метра.</b> Укажите, сколько пролётов каждой высоты нужно: с установкой или без неё.</p>
+          <div class="ftable" id="ftable">
+            <div class="frow fhead"><span class="fh">Высота</span><span class="fa">С установкой</span><span class="fn">Без установки</span><span class="fsum">Сумма</span></div>
+          </div>
+        </div>
+        <div class="fields" id="calc-tile" hidden>
+          <div class="field full"><label for="t-model">Вид плитки</label><select id="t-model"></select></div>
+          <div class="field"><label for="t-area">Площадь, м²</label><input id="t-area" type="number" min="1" step="1" value="60" inputmode="numeric"></div>
+          <div class="field"><label for="t-th">Толщина</label>
+            <select id="t-th"><option value="40">40 мм — пешеходные дорожки</option><option value="60" selected>60 мм — двор, легковое авто</option><option value="80">80 мм — грузовой транспорт</option></select></div>
+          <div class="field"><label for="t-color">Цвет</label>
+            <select id="t-color"><option value="0">Серый</option><option value="1">Цветной (+12%)</option></select></div>
+          <div class="field"><label for="t-curb">Бордюр, пог. м</label><input id="t-curb" type="number" min="0" step="1" value="30" inputmode="numeric"></div>
+          <div class="field full"><label class="check"><input type="checkbox" id="t-lay" checked> Укладка с подготовкой основания (900 ₽/м²)</label></div>
+        </div>
+      </div>
+      <div class="receipt" aria-live="polite">
+        <h3>Предварительная смета</h3>
+        <div id="rlines"></div>
+        <div class="rtotal"><span>Итого</span><b id="rtotal">—</b></div>
+        <button class="btn btn-acc" id="calc-order" type="button">Отправить расчёт в заявку</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="eyebrow">О нас</div><h2>Предприятие «Фрунзе 212» основано в 2016 году</h2></div>
+      <p>Производим бетонные изделия и занимаемся благоустройством дворовых и придомовых территорий в Мелитополе и районе.</p></div>
+    <div class="adv">
+      <div><b>Бетон</b><h3>Своё производство</h3><p>Плиты и столбы еврозабора, тротуарная плитка и бордюры. Всё делаем сами на ул. Фрунзе, 212.</p></div>
+      <div><b>Двор</b><h3>Благоустройство</h3><p>Укладываем плитку, ставим заборы и обустраиваем дворы и придомовые территории под ключ.</p></div>
+      <div><b>Камень</b><h3>Кирпич и камень</h3><p>Продаём большой ассортимент облицовочного кирпича и природного камня.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="zamer" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="eyebrow">Замер и заказ</div><h2>Несколько простых шагов до готовой работы</h2></div>
+      <p>Так проходит заказ продукции и строительных работ.</p></div>
+    <div class="steps">
+      <div class="step"><h3>Заявка</h3><p>Оставьте номер телефона в форме ниже или приезжайте к нам: г. Мелитополь, ул. Фрунзе, 212.</p></div>
+      <div class="step"><h3>Данные</h3><p>Заполните форму: что нужно сделать, примерные размеры и адрес объекта.</p></div>
+      <div class="step"><h3>Замер</h3><p>Наши специалисты свяжутся с вами и договорятся об удобных дате и времени замера.</p></div>
+      <div class="step"><h3>Смета</h3><p>В течение суток вы получаете смету: стоимость всех работ и материалов.</p></div>
+      <div class="step"><h3>Дата работ</h3><p>Если вас устраивает расчёт и сумма под ключ, назначаем дату работ.</p></div>
+      <div class="step"><h3>Доставка</h3><p>В условленный день привозим материалы на объект с сопроводительными накладными.</p></div>
+      <div class="step"><h3>Приёмка</h3><p>Вы осматриваете выполненную работу. Мы отвечаем за результат и даём гарантию.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="faq" style="padding-top:0">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="eyebrow">Частые вопросы</div><h2>Отвечаем заранее</h2></div></div>
+    <div class="faq">
+      <details><summary>Нужен ли фундамент под еврозабор?</summary><p>Обычно нет. Столбы ставятся в пробуренные лунки глубиной 70–90 см и бетонируются. Ленточный фундамент нужен только на подвижных грунтах и крутых склонах — это определит замерщик.</p></details>
+      <details><summary>Можно ли установить забор на участке с уклоном?</summary><p>Да. На склоне пролёты монтируются ступенями, а перепад закрывается дополнительной нижней плитой.</p></details>
+      <details><summary>Какую толщину плитки выбрать для заезда машины?</summary><p>Для легкового авто достаточно 60 мм на щебёночном основании. Для грузового транспорта и проездов — 80 мм и бетонное основание.</p></details>
+      <details><summary>Куда вы доставляете?</summary><p>По Мелитополю и району. Стоимость доставки зависит от расстояния и объёма, назовём её по телефону.</p></details>
+      <details><summary>Можно ли купить только плиты, без монтажа?</summary><p>Да, продаём любые объёмы. Можно забрать самовывозом с ул. Фрунзе, 212 или заказать доставку.</p></details>
+    </div>
+  </div>
+</section>
+</main>
+
+<section class="contact-sec" id="contacts">
+  <div class="wrap">
+    <div class="sec-head"><div><div class="eyebrow">Контакты</div><h2>Приезжайте на производство</h2></div>
+      <p>На ул. Фрунзе, 212 можно посмотреть плиты забора и образцы плитки вживую.</p></div>
+    <div class="contacts">
+      <dl class="cinfo">
+        <div><dt>Телефоны</dt>
+          <dd class="big"><span id="phone-txt">+7 (990) 287-64-39</span><button class="copy" type="button" data-copy="phone-txt">Копировать</button></dd>
+          <dd class="big" style="margin-top:8px"><span id="phone2-txt">+7 (990) 296-07-14</span><button class="copy" type="button" data-copy="phone2-txt">Копировать</button></dd></div>
+        <div><dt>Почта</dt><dd><span id="mail-txt">denisbegushev@yandex.ru</span><button class="copy" type="button" data-copy="mail-txt">Копировать</button></dd></div>
+        <div><dt>Адрес производства</dt><dd>Запорожская обл., г. Мелитополь, ул. Фрунзе, 212</dd></div>
+        <div><dt>Telegram</dt>
+          <dd><a class="tg" href="https://t.me/stroymaterial_Frunze212" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#EEF2F9"/><path d="M5.5 11.6l11.2-4.3c.5-.2 1 .1.8.9l-1.9 9c-.1.6-.5.8-1 .5l-2.9-2.1-1.4 1.3c-.2.2-.3.3-.6.3l.2-2.9 5.3-4.8c.2-.2 0-.3-.3-.1l-6.6 4.1-2.8-.9c-.6-.2-.6-.6.1-.9z" fill="#1B2F57"/></svg>Наш Telegram-канал</a></dd>
+          <dd style="margin-top:10px"><a class="tg" id="tg-link" href="https://t.me/frunze212_bot" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="#EEF2F9"/><path d="M5.5 11.6l11.2-4.3c.5-.2 1 .1.8.9l-1.9 9c-.1.6-.5.8-1 .5l-2.9-2.1-1.4 1.3c-.2.2-.3.3-.6.3l.2-2.9 5.3-4.8c.2-.2 0-.3-.3-.1l-6.6 4.1-2.8-.9c-.6-.2-.6-.6.1-.9z" fill="#1B2F57"/></svg>Бот: расчёт и запись на замер</a></dd></div>
+        <div><svg class="logo-big" viewBox="0 0 100 100" aria-hidden="true"><circle cx="50" cy="50" r="47" fill="#fff" stroke="#2C4E8F" stroke-width="4"/><circle cx="50" cy="50" r="39" fill="none" stroke="#8A8F96" stroke-width="2"/><g transform="rotate(45 50 50)" stroke="#2C4E8F" stroke-width="1.6"><rect x="28" y="28" width="11" height="22" fill="#fff"/><rect x="39" y="28" width="11" height="22" fill="#fff"/><rect x="50" y="28" width="22" height="11" fill="#2C4E8F" stroke="#fff"/><rect x="50" y="39" width="22" height="11" fill="#2C4E8F" stroke="#fff"/><rect x="28" y="50" width="22" height="11" fill="#2C4E8F" stroke="#fff"/><rect x="28" y="61" width="22" height="11" fill="#2C4E8F" stroke="#fff"/><rect x="50" y="50" width="11" height="22" fill="#fff"/><rect x="61" y="50" width="11" height="22" fill="#fff"/></g></svg></div>
+      </dl>
+      <form class="cform" id="lead" novalidate>
+        <h3>Заявка на замер и расчёт</h3>
+        <div class="fields">
+          <div class="field"><label for="l-name">Имя</label><input id="l-name" autocomplete="name" placeholder="Как к вам обращаться"></div>
+          <div class="field"><label for="l-phone">Телефон</label><input id="l-phone" type="tel" autocomplete="tel" placeholder="+7 (9__) ___-__-__"></div>
+          <div class="field full"><label for="l-topic">Тема</label><select id="l-topic"><option>Записаться на замер</option><option>Расчёт еврозабора</option><option>Тротуарная плитка</option><option>Облицовочный кирпич и природный камень</option><option>Благоустройство двора под ключ</option></select></div>
+          <div class="field full"><label for="l-msg">Что нужно</label><textarea id="l-msg" rows="4" placeholder="Например: забор 40 м, высота 2 м, рисунок «Кирпич», адрес объекта"></textarea></div>
+        </div>
+        <p id="l-err" class="spec" style="color:#C2410C" hidden>Укажите телефон, чтобы мы могли перезвонить.</p>
+        <button class="btn btn-acc" type="submit">Оставить заявку</button>
+        <div id="l-ok" class="sent" hidden></div>
+      </form>
+    </div>
+  </div>
+</section>
+<dialog id="lb" aria-label="Фото">
+  <img alt="">
+  <p></p>
+  <button class="lbn prev" type="button" aria-label="Предыдущее фото">‹</button>
+  <button class="lbn next" type="button" aria-label="Следующее фото">›</button>
+  <button class="lbx" type="button" aria-label="Закрыть">×</button>
+</dialog>
+<footer><div class="wrap"><span>© 2016–2026 «Фрунзе 212». Тротуарная плитка и еврозаборы, г. Мелитополь.</span><span>mlt-frunze212.ru · Цены на сайте не являются публичной офертой</span></div></footer>
+
+<script>
+const $=s=>document.querySelector(s);
+const fmt=n=>Math.round(n).toLocaleString('ru-RU')+' ₽';
+function rng(seed){let s=seed%2147483647||1;return()=>(s=s*16807%2147483647)/2147483647}
+
+/* ---------- fence drawing ---------- */
+const FENCE_COLORS={'Натуральный':['#B7B8B2','#8E908A','#A6A7A1'],'Терракот':['#A65D45','#7E4433','#955340'],'Графит':['#5A5D5C','#3E4140','#4F5251'],'Песок':['#CDB991','#A8946C','#BFAB83']};
+function fencePattern(id,type,c){
+  const [b,s]=c;
+  const P={
+    brick:`<pattern id="${id}" width="20" height="10" patternUnits="userSpaceOnUse"><rect width="20" height="10" fill="${b}"/><path d="M0 .5H20M0 5H20M5 0V5M15 5V10" stroke="${s}" stroke-width="1"/></pattern>`,
+    board:`<pattern id="${id}" width="48" height="7" patternUnits="userSpaceOnUse"><rect width="48" height="7" fill="${b}"/><path d="M0 .5H48" stroke="${s}"/><path d="M2 3.5Q12 2.2 24 3.6T46 3.4M10 5.3Q20 4.6 30 5.4" stroke="${s}" stroke-width=".5" fill="none" opacity=".7"/><path d="M47.5 0V7" stroke="${s}" stroke-width=".6"/></pattern>`,
+    rock:`<pattern id="${id}" width="36" height="14" patternUnits="userSpaceOnUse"><rect width="36" height="14" fill="${b}"/><path d="M0 1 L9 0 L13 6 L7 13 L0 12Z M13 6 L22 1 L28 7 L23 14 L7 13 M28 7 L36 3 M22 1 L18 0" stroke="${s}" stroke-width=".9" fill="none"/></pattern>`,
+    slate:`<pattern id="${id}" width="9" height="9" patternUnits="userSpaceOnUse"><rect width="9" height="9" fill="${b}"/><path d="M-1 10L10 -1" stroke="${s}" stroke-width="1.4"/></pattern>`,
+    smooth:`<pattern id="${id}" width="10" height="10" patternUnits="userSpaceOnUse"><rect width="10" height="10" fill="${b}"/><circle cx="3" cy="4" r=".4" fill="${s}"/><circle cx="8" cy="8" r=".3" fill="${s}"/></pattern>`,
+    ajur:`<pattern id="${id}" width="14" height="28" patternUnits="userSpaceOnUse"><rect width="14" height="28" fill="${b}"/><path d="M7 5 L11 14 L7 23 L3 14Z" fill="var(--holebg,#262927)" stroke="${s}"/></pattern>`
+  };
+  return P[type];
+}
+let uid=0;
+function fenceSVG(type,colorName,opts={}){
+  const c=FENCE_COLORS[colorName]; const id='fp'+(uid++), id2='fs'+(uid++);
+  const rows=opts.rows||4, W=240, ph=24, top=150-14-rows*ph-6;
+  let out=`<svg viewBox="0 0 ${W} 150" xmlns="http://www.w3.org/2000/svg" class="${opts.cls||''}" role="img" aria-label="Еврозабор">`;
+  out+=`<defs>${fencePattern(id,type==='ajur'?'smooth':type,c)}${type==='ajur'?fencePattern(id2,'ajur',c):''}</defs>`;
+  out+=`<rect x="0" y="136" width="${W}" height="14" fill="#7A6E5E" opacity=".35"/>`;
+  const posts=[6,120-6,234-12];
+  [[18,96],[126,96]].forEach(([x,w])=>{
+    for(let r=0;r<rows;r++){
+      const y=top+r*ph+6;
+      const fid=(type==='ajur'&&r===0)?id2:id;
+      out+=`<rect x="${x}" y="${y}" width="${w}" height="${ph-1.5}" fill="url(#${fid})" stroke="${c[1]}" stroke-width=".8"/>`;
+    }
+  });
+  posts.forEach(x=>{out+=`<rect x="${x}" y="${top}" width="12" height="${136-top+4}" fill="${c[2]}" stroke="${c[1]}" stroke-width=".8"/><rect x="${x-1}" y="${top-3}" width="14" height="4" fill="${c[1]}"/>`});
+  return out+'</svg>';
+}
+
+/* ---------- tile drawing ---------- */
+const TILE_COLORS={'Серый':['#9A9C98','#8B8D89','#A8AAA5'],'Красный':['#A4483A','#923F31','#B15641'],'Жёлтый':['#D3A33E','#C29330','#DEB252'],'Коричневый':['#70503B','#614331','#7E5B44'],'Графит':['#424443','#383A39','#4D4F4E'],'Колормикс':['#B5582F','#D99A2B','#7A3E22'],'Бело-голубой':['#C9D5E3','#8FA8CC','#5F7FAE']};
+function tileSVG(type,colorName){
+  const c=TILE_COLORS[colorName]; const r=rng(type.length*97+colorName.length*13);
+  const W=240,H=150,g='rgba(0,0,0,.38)'; const pick=()=>c[Math.floor(r()*3)];
+  let s=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Тротуарная плитка"><rect width="${W}" height="${H}" fill="${g}"/>`;
+  const rect=(x,y,w,h)=>{s+=`<rect x="${x+.8}" y="${y+.8}" width="${w-1.6}" height="${h-1.6}" rx="1.2" fill="${pick()}"/>`};
+  if(type==='brick'){for(let y=0,i=0;y<H;y+=14,i++)for(let x=(i%2?-14:0);x<W;x+=28)rect(x,y,28,14)}
+  else if(type==='basket'){
+    for(let j=0,y=0;y<H;y+=28,j++)for(let i=0,x=0;x<W;x+=28,i++){
+      if((i+j)%2){rect(x,y,28,14);rect(x,y+14,28,14)}else{rect(x,y,14,28);rect(x+14,y,14,28)}
+    }}
+  else if(type==='square'){for(let y=0;y<H;y+=24)for(let x=0;x<W;x+=24)rect(x,y,24,24)}
+  else if(type==='oldtown'){
+    const unit=[[0,0,16,16],[16,0,24,16],[40,0,16,24],[0,16,24,16],[24,16,16,16],[40,24,16,8],[0,32,16,8],[16,32,24,8],[40,32,16,8]];
+    for(let oy=0;oy<H;oy+=40)for(let ox=0;ox<W;ox+=56)unit.forEach(([x,y,w,h])=>rect(ox+x,oy+y,w,h));}
+  else if(type==='wave'){
+    for(let y=0,i=0;y<H;y+=12,i++)for(let x=(i%2?-10:0);x<W;x+=20){
+      s+=`<path d="M${x+1} ${y+1} q4 0 3 3 q-1 3 3 3 q4 0 3 3 q0 2 -9 2z M${x+1} ${y+1} h17 q-3 0 -2 3 q1 3 -3 3 q-4 0 -3 3 q0 2 5 2 h-14z" fill="${pick()}"/>`;
+    }}
+  else if(type==='hex'){
+    const R=13, w=R*Math.sqrt(3);
+    for(let row=0,y=0;y<H+R;y+=R*1.5,row++)for(let x=(row%2?w/2:0)-w;x<W+w;x+=w){
+      let p='';for(let a=0;a<6;a++){const t=Math.PI/3*a+Math.PI/6;p+=(a?'L':'M')+(x+(R-1)*Math.cos(t)).toFixed(1)+' '+(y+(R-1)*Math.sin(t)).toFixed(1)}
+      s+=`<path d="${p}Z" fill="${pick()}"/>`;
+    }}
+  return s+'</svg>';
+}
+
+/* ---------- data ---------- */
+/* ЦЕНЫ ЗАБОРА ЗА ОДИН ПРОЛЁТ (2 м): mat — плиты и столбы, inst — доплата за установку. Замените на свои. */
+const FENCE_SPAN=[{h:2.5,mat:7200,inst:1800},{h:2.0,mat:5800,inst:1600},{h:1.8,mat:5300,inst:1500},{h:1.5,mat:4500,inst:1400},{h:1.0,mat:3200,inst:1200},{h:0.5,mat:1800,inst:1000}];
+const hTxt=h=>h.toFixed(1).replace('.',',').replace(',0','')+' м';
+const FENCES=[
+  {id:'brick',name:'«Кирпич»',plate:950,d:'Классическая кладка. Двусторонний рисунок, смотрится одинаково с обеих сторон.'},
+  {id:'rock',name:'«Скала»',plate:1050,d:'Фактура дикого камня. Хорошо скрывает мелкие неровности и загрязнения.'},
+  {id:'board',name:'«Доска»',plate:1000,d:'Имитация деревянного забора, но без гниения и ежегодной покраски.'},
+  {id:'slate',name:'«Сланец»',plate:980,d:'Строгий диагональный рельеф. Подходит для промышленных территорий.'},
+  {id:'ajur',name:'«Ажур»',plate:1150,d:'Верхняя плита с просветами. Пропускает свет и воздух, облегчает вид забора.'},
+  {id:'smooth',name:'«Гладкий»',plate:850,d:'Ровная поверхность под покраску или декоративную штукатурку. Самый бюджетный.'}
+];
+const TILES=[
+  {id:'brick',name:'«Кирпичик»',size:'200×100 мм',base:820,d:'Самая универсальная форма. Укладывается «ёлочкой», «корзинкой» или вразбежку.'},
+  {id:'basket',name:'«Кирпичик» корзинкой',size:'200×100 мм',base:850,d:'Та же плитка, уложенная парами вдоль и поперёк. Хорошо держит нагрузку от колёс.'},
+  {id:'oldtown',name:'«Старый город»',size:'3 размера в комплекте',base:950,d:'Набор из разноразмерных элементов. Даёт живой рисунок старой мостовой.'},
+  {id:'wave',name:'«Волна»',size:'225×112 мм',base:870,d:'Фигурный край сцепляет плитки между собой. Подходит для парковок.'},
+  {id:'square',name:'«Квадрат»',size:'200×200 мм',base:780,d:'Простая сетка для дорожек, террас и зон отдыха у дома.'},
+  {id:'hex',name:'«Шестигранник»',size:'Ø 230 мм',base:900,d:'Сотовый рисунок. Красиво обходит клумбы и изогнутые бордюры.'}
+];
+
+/* ---------- catalog ---------- */
+/* tabs */
+function setupTabs(a,b,pa,pb,cb){
+  const set=x=>{a.setAttribute('aria-selected',x===a);b.setAttribute('aria-selected',x===b);pa.hidden=x!==a;pb.hidden=x!==b;cb&&cb(x===a?'a':'b')};
+  a.onclick=()=>set(a);b.onclick=()=>set(b);return set;
+}
+let mode='fence';
+const setCalc=setupTabs($('#ctab-fence'),$('#ctab-tile'),$('#calc-fence'),$('#calc-tile'),w=>{mode=w==='a'?'fence':'tile';calc()});
+
+/* hero art */
+(function(){const r=rng(212),pal=['#2C4E8F','#3E6AAE','#6F95C8','#A9C1DE','#D8DACB','#1D3768','#24447E'];let o='<svg viewBox="0 0 1600 760" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">';
+  for(let x=0;x<1600;x+=46){let y=-r()*120;while(y<760){const h=60+r()*130;o+=`<rect x="${x+1}" y="${y.toFixed(0)}" width="44" height="${(h-2).toFixed(0)}" fill="${pal[Math.floor(r()*pal.length)]}"/>`;y+=h}}
+  $('#heroBg').innerHTML=o+'</svg>'})();
+
+/* ---------- calculator ---------- */
+const fq=FENCE_SPAN.map(()=>({a:0,n:0})); fq[1].a=10;
+FENCE_SPAN.forEach((f,i)=>{
+  const row=document.createElement('div');row.className='frow';row.id='frow'+i;
+  const stp=(k,cap)=>`<div class="stp f${k}"><span class="cap">${cap}</span><button type="button" data-i="${i}" data-k="${k}" data-d="-1" aria-label="Меньше">−</button><input id="fq-${k}-${i}" type="number" min="0" step="1" value="${fq[i][k]}" inputmode="numeric" aria-label="${hTxt(f.h)}, ${cap.toLowerCase()}, пролётов" data-i="${i}" data-k="${k}"><button type="button" data-i="${i}" data-k="${k}" data-d="1" aria-label="Больше">+</button></div>`;
+  row.innerHTML=`<span class="fh">${hTxt(f.h)}</span>${stp('a','С установкой')}${stp('n','Без установки')}<span class="fsum" id="fsum${i}">0 ₽</span>`;
+  $('#ftable').appendChild(row);
+});
+$('#ftable').addEventListener('click',e=>{const b=e.target.closest('button[data-d]');if(!b)return;const q=fq[b.dataset.i];q[b.dataset.k]=Math.max(0,q[b.dataset.k]+ +b.dataset.d);$(`#fq-${b.dataset.k}-${b.dataset.i}`).value=q[b.dataset.k];calc()});
+$('#ftable').addEventListener('input',e=>{const t=e.target;if(t.dataset.k){fq[t.dataset.i][t.dataset.k]=Math.max(0,Math.floor(+t.value||0));calc()}});
+TILES.forEach((t,i)=>$('#t-model').add(new Option(t.name+' ('+t.size+')',i)));
+let lastText='';
+function calc(){
+  const L=[];let total=0;const add=(n,v)=>{L.push([n,v]);total+=v};
+  if(mode==='fence'){
+    let spans=0;const parts=[];
+    FENCE_SPAN.forEach((f,i)=>{
+      const {a,n}=fq[i];const sum=a*(f.mat+f.inst)+n*f.mat;spans+=a+n;
+      $('#fsum'+i).textContent=fmt(sum);$('#frow'+i).classList.toggle('on',a+n>0);
+      if(a){add(`${hTxt(f.h)} · ${a} прол. с установкой × ${(f.mat+f.inst).toLocaleString('ru-RU')}`,a*(f.mat+f.inst));parts.push(`${hTxt(f.h)} — ${a} прол. с установкой`)}
+      if(n){add(`${hTxt(f.h)} · ${n} прол. без установки × ${f.mat.toLocaleString('ru-RU')}`,n*f.mat);parts.push(`${hTxt(f.h)} — ${n} прол. без установки`)}
+    });
+    L.push(['Общая длина забора',spans*2+' м']);
+    lastText=parts.length?`Еврозабор: ${parts.join('; ')}. Общая длина ${spans*2} м`:'Еврозабор: пролёты не выбраны';
+  }else{
+    const t=TILES[+$('#t-model').value]; const a=Math.max(1,+$('#t-area').value||0); const th=+$('#t-th').value;
+    const k={40:.82,60:1,80:1.25}[th]*(+$('#t-color').value?1.12:1); const p=Math.round(t.base*k);
+    add(`Плитка ${t.name} ${th} мм: ${a} м² × ${p}`,a*p);
+    const curb=Math.max(0,+$('#t-curb').value||0); if(curb){const n=Math.ceil(curb/0.5);add(`Бордюр 500×200×50: ${n} шт × 250`,n*250)}
+    if($('#t-lay').checked)add(`Укладка: ${a} м² × 900`,a*900);
+    lastText=`Плитка ${t.name}, ${th} мм, ${a} м²${curb?', бордюр '+curb+' м':''}`;
+  }
+  $('#rlines').innerHTML=L.map(([n,v])=>`<div class="rline"><span>${n}</span><span>${typeof v==='string'?v:fmt(v)}</span></div>`).join('');
+  $('#rtotal').textContent=fmt(total);
+  lastText+=` — ориентировочно ${fmt(total)}`;
+}
+document.querySelectorAll('#calc-tile input,#calc-tile select').forEach(e=>e.addEventListener('input',calc));
+function openCalc(m,i){
+  if(m==='fence'){setCalc($('#ctab-fence'))}else{$('#t-model').value=i;setCalc($('#ctab-tile'))}
+  $('#calc').scrollIntoView({behavior:'smooth'});
+}
+$('#calc-order').onclick=()=>{$('#l-msg').value=lastText;$('#contacts').scrollIntoView({behavior:'smooth'});setTimeout(()=>$('#l-name').focus({preventScroll:true}),500)};
+const BRICKS=[[484,"hyper","Антика","250×120×65",78.0],[485,"hyper","Графит","250×120×65",65.0],[486,"hyper","Туф","250×120×65",65.0],[487,"hyper","Тёмная лава","250×120×65",78.0],[488,"hyper","Шмель","250×120×65",78.0],[489,"hyper","Мотобук","250×120×65",78.0],[490,"hyper","Лава","250×120×65",78.0],[491,"hyper","Тигр","250×120×65",78.0],[492,"hyper","Амстердам","250×120×65",78.0],[493,"hyper","Розовый кварц","250×120×65",78.0],[494,"hyper","Гранит","250×120×65",78.0],[495,"hyper","Капучино","250×120×65",78.0],[496,"hyper_h","Шоколадка","250×120×65",48.0],[497,"hyper_h","Слоновая кость","250×120×65",51.0],[498,"hyper_h","Микс","250×120×65",78.0],[499,"hyper_h","Слоновая кость, полуторный","250×120×88",59.5],[500,"fin","Финский, природный","250×120×65",71.0],[501,"fin","Финский, шоколад","250×120×65",71.0],[502,"fin","Финский, горчица","250×120×65",71.0],[503,"fin","Финский, чёрный","250×120×65",71.0],[504,"fin","Американка, шоколад","250×65×60",38.0],[505,"fin","Американка, горчица","250×65×60",38.0],[506,"fin","Американка, чёрный","250×65×60",38.0],[507,"fin","Американка, красный","250×65×60",38.0],[508,"fin","Финский торцевой","",72.0],[509,"tile","Цокольная плитка","250×120×25",33.0],[510,"tile","Кирпич-плитка 22","250×120×22",23.0],[511,"smooth","Гладкий Европейский","250×120×65",62.0],[512,"smooth","Гладкий пустотелый, природный","250×120×65",39.0],[513,"smooth","Гладкий пустотелый, шоколад","250×120×65",39.0],[514,"smooth","Гладкий пустотелый, горчица","250×120×65",39.0],[515,"smooth","Гладкий пустотелый, чёрный","250×120×65",39.0],[516,"smooth","Гладкий пустотелый, красный","250×120×65",39.0],[519,"hand","Латунь","",120.0],[520,"hand","Ферум","",120.0],[521,"hand","Белое золото","",120.0],[522,"hand","Бронза","",120.0],[523,"hand","Патина","",120.0],[524,"ceram","Британия тростник","250×120×65",62.0],[525,"ceram","Бежевый риф","250×120×65",61.0],[526,"ceram","Британия Риф","250×120×65",63.0],[527,"ceram","Норд риф","250×120×65",84.0],[528,"ceram","Бежевый кросто","250×120×65",61.0],[529,"ceram","Солома кросто","250×120×65",56.0],[530,"ceram","Коричневый береста","250×120×65",76.5],[531,"ceram","Солома береста","250×120×65",75.0],[532,"ceram","Вишня береста","250×120×65",76.0],[533,"ceram","Красный береста","250×120×65",52.0],[534,"ceram","Винтаж","250×120×65",76.0],[535,"ceram","Светлый винтаж","250×120×65",76.0],[536,"ceram","Вулкан","250×120×65",76.0],[537,"ceram","Солома руст","250×120×65",75.0],[538,"ceram","Коричневый руст","250×120×65",76.5],[539,"ceram","Вишня руст","250×120×65",76.0],[540,"ceram","Красный руст","250×120×65",53.0],[541,"ceram","Баварская кладка","250×120×65",76.0],[542,"ceram","Светлый гладкий","250×120×65",76.5],[543,"ceram","Слоновая кость","250×120×65",94.5],[544,"ceram","Красный гладкий","250×120×65",50.0],[545,"ceram","Коричневый гладкий","250×120×65",76.0],[546,"ceram","Британия гладкий","250×120×65",76.0],[547,"ceram","Норд гладкий","250×120×65",82.0],[548,"ceram","Солома гладкий","250×120×65",72.0],[550,"ceram15","Солома береста","250×120×88",95.0],[551,"ceram15","Береста коричневый","250×120×88",95.0],[552,"ceram15","Норд гладкий","250×120×88",102.0],[553,"ceram15","Солома гладкая","250×120×88",93.0],[554,"ceram15","Британия гладкая","250×120×88",95.0],[555,"ceram15","Бежевый гладкий","250×120×88",97.0],[556,"ceram15","Вишня гладкий","250×120×88",92.0],[557,"ceram15","Красный гладкий","250×120×88",72.0],[558,"ceram15","Красный руст","250×120×88",75.0],[559,"ceram15","Коричневый береста","250×120×88",96.0],[560,"ceram15","Красный береста","250×120×88",75.0],[561,"ceram15","Светлый береста","250×120×88",95.0]];
+
+/* ---------- фото-каталог ---------- */
+const IMG=id=>`img/${id}.jpg`;
+const rub=v=>(Number.isInteger(v)?v.toLocaleString('ru-RU'):v.toLocaleString('ru-RU',{minimumFractionDigits:2,maximumFractionDigits:2}))+' ₽';
+const FENCE_MODELS=[
+ [1,562,2,'Кольцо-шоколад','Шоколад','Шоколад'],[2,563,2,'Кольцо-шоколад','Шоколад','Кольцо-шоколад'],[3,564,2,'Фагот'],
+ [4,565,1.5,'Крестик','Бут','Бут'],[5,566,2,'Цветок'],[6,567,2,'Бревно-пень','Бревно','Бревно'],
+ [7,568,1.5,'Цветок','Плетёнка','Плетёнка'],[8,569,1.5,'Фантазия','Плетёнка','Плетёнка'],[9,570,1.5,'Штокет','Штокет','Фагот'],
+ [10,571,1.5,'Цветок','Бут','Бут'],[12,572,1.5,'Фантазия','Фагот','Фагот'],[13,573,2,'Фантазия','Фагот','Фагот-верх'],
+ [14,574,1.5,'Фагот-верх','Фагот','Фагот'],[15,575,2,'Карпатский камень-верх','Карпатский камень','Карпатский камень'],[16,576,2,'Песчаник'],
+ [17,577,2,'Дерево-верх','Дерево','Дерево'],[18,578,2,'Дерево'],[19,579,1.5,'Гладкий фагот-верх','Гладкий фагот','Гладкий фагот'],
+ [23,580,2,'Балясина','Бут','Бут'],[24,581,2,'Фантазия','Карпатский камень','Карпатский камень'],[25,582,1.5,'Штокет'],
+ [26,583,2,'Фантазия','Фантазия','Фагот'],[27,584,2,'Доска'],[29,585,2,'Фантазия','Фантазия глухая','Фантазия глухая'],
+ [30,586,2,'Карпатский камень кольцо','Карпатский камень','Карпатский камень кольцо'],[31,587,1,'Фагот-верх',null,'Фагот-верх'],
+ [32,588,1.5,'Фагот-верх','Фагот-верх','Фагот']];
+const BRICK_GROUPS={hyper:['Гиперпрессованный','250×120×65 мм'],hyper_h:['Гиперпрессованный пустотелый',''],fin:['«Финский» и «Американка»','рваный камень'],
+ tile:['Облицовочная плитка','для цоколя и фасада'],smooth:['Гладкий',''],hand:['Ручной формовки','полнотелый'],
+ ceram:['Керамический одинарный','250×120×65 мм'],ceram15:['Керамический полуторный','250×120×88 мм']};
+const TILE_PHOTOS=[['215_0','Плитка колормикс','Миксы цветов по вашему желанию'],['216_0','Плитка колормикс','Миксы цветов по вашему желанию'],
+ ['217_0','Плитка колормикс','Миксы цветов по вашему желанию'],['392_5','Колормикс, красно-коричневый','Своё производство'],
+ ['274_4','Колормикс, тёмный','Своё производство'],['198_0','Новый город колормикс','Новинка'],['200_0','Новый город колормикс','Новинка'],
+ ['439_0','Эко-плитка «Полумесяц»','Садовая дорожка · 5 см · 70×50'],['439_2','Эко-плитка «Булыжник»','Садовая дорожка · 7 см · 50×50'],
+ ['428_0','Поребрик','Для тротуарной плитки, разные цвета'],['274_3','Плитка на поддонах','Отгрузка с производства'],['392_1','Готовая партия колормикс','Отгрузка с производства']];
+const MATS=[['16_0','Цемент М-500',''],['19_0','Песок карьерный',''],['19_1','Песок речной',''],['17_0','Щебень',''],['15_0','Отсев гранита',''],
+ ['5_0','Шифер 8-волновой','5,8 мм · 1,75×1,13 м'],['28_0','Пигмент для бетона','Чёрный, красный, жёлтый, коричневый, оранжевый'],
+ ['206_0','Бетонные блоки ФБС','ФБС 1.2-4-6, ФБС 2.4-4-6'],['79_0','Строительные блоки',''],['78_0','Бордюры',''],
+ ['76_0','Водостоки',''],['77_0','Водоотводные лотки','']];
+const WORKS_TILE=["286_1", "286_3", "286_5", "292_2", "298_1", "298_4", "305_3", "311_1", "316_2", "316_4", "328_3", "328_5", "335_1", "340_3", "340_6", "352_0", "352_3", "356_0", "361_0", "363_0", "364_2", "364_6", "372_0", "372_3", "377_0", "377_4", "406_0", "406_2", "409_0", "409_2", "430_0", "433_0", "433_2", "443_0", "443_1", "274_7", "284_1", "392_3"];
+const WORKS_PAINT=["51_0", "54_0", "55_0", "57_0", "62_0", "65_0", "68_0", "74_0", "75_0", "69_0", "56_0", "60_0"];
+const WORKS_BRICK=[['127_0','Мангал'],['131_0','Мангал с беседкой'],['133_0','Мангал'],['135_0','Мангал'],['108_0','Клумбы'],['112_0','Клумба'],
+ ['116_0','Клумба'],['118_0','Клумба'],['160_0','Забор'],['164_0','Забор'],['170_0','Забор'],['174_0','Забор'],['184_0','Забор'],['186_0','Забор'],['192_0','Забор']];
+
+/* лайтбокс: листает фото внутри одной сетки */
+const lb=$('#lb');let lbList=[],lbI=0;
+function lbShow(){const [src,cap]=lbList[lbI];lb.querySelector('img').src=src;lb.querySelector('img').alt=cap;lb.querySelector('p').textContent=cap}
+function openLb(list,i){lbList=list;lbI=i;lbShow();try{lb.showModal()}catch(e){lb.setAttribute('open','')}}
+lb.querySelector('.lbx').onclick=()=>lb.close();
+lb.querySelector('.prev').onclick=()=>{lbI=(lbI-1+lbList.length)%lbList.length;lbShow()};
+lb.querySelector('.next').onclick=()=>{lbI=(lbI+1)%lbList.length;lbShow()};
+lb.addEventListener('click',e=>{if(e.target===lb)lb.close()});
+document.addEventListener('keydown',e=>{if(!lb.open)return;if(e.key==='ArrowLeft')lb.querySelector('.prev').click();if(e.key==='ArrowRight')lb.querySelector('.next').click()});
+
+function pcard(grid,{id,ar,title,spec,price,btn,onBtn,cap}){
+  const el=document.createElement('article');el.className='pcard';
+  el.innerHTML=`<button class="pz" type="button" style="--ar:${ar||'1/1'}"><img loading="lazy" decoding="async" src="${IMG(id)}" alt=""></button>`+
+    (title?`<div class="pb"><div class="pt"></div>${spec?'<div class="ps"></div>':''}${price||btn?'<div class="pp"></div>':''}</div>`:'');
+  const img=el.querySelector('img');img.alt=cap||title||'';
+  if(title){el.querySelector('.pt').innerHTML=title;if(spec)el.querySelector('.ps').textContent=spec}
+  if(price||btn){const pp=el.querySelector('.pp');pp.innerHTML=price?`<div class="price">${price}</div>`:'<span></span>';
+    if(btn){const b=document.createElement('button');b.className='link-btn';b.type='button';b.textContent=btn;b.onclick=onBtn;pp.appendChild(b)}}
+  grid.appendChild(el);return el;
+}
+function gallery(grid,items){ /* items: [{id,ar,title,...,cap}] */
+  const list=items.map(it=>[IMG(it.id),it.cap||it.title?.replace(/<[^>]+>/g,'')||'']);
+  items.forEach((it,i)=>pcard(grid,it).querySelector('.pz').onclick=()=>openLb(list,i));
+}
+function askPrice(what,topic){
+  $('#l-topic').value=topic;$('#l-msg').value='Узнать цену: '+what;
+  $('#contacts').scrollIntoView({behavior:'smooth'});setTimeout(()=>$('#l-name').focus({preventScroll:true}),500);
+}
+function subhead(grid,title,note){const d=document.createElement('div');d.className='subhead';d.innerHTML='<h3></h3><span></span>';d.querySelector('h3').textContent=title;d.querySelector('span').textContent=note||'';grid.appendChild(d)}
+
+/* еврозаборы */
+gallery($('#cat-fence'),FENCE_MODELS.map(([n,post,h,top,mid,bot])=>{
+  const span=FENCE_SPAN.find(f=>Math.abs(f.h-h)<.01);const name=mid===undefined?`«${top}»`:'';
+  const parts=mid===undefined?'':`Верх: ${top}${mid?`, середина: ${mid}`:''}, низ: ${bot}`;
+  return {id:post+'_0',ar:'3/4',title:`<b>№${n}</b>${name||'Еврозабор'}`,spec:`Высота ${hTxt(h)}${parts?' · '+parts:''}`,
+    price:span?`от ${rub(Math.round(span.mat/2))}<small> /м</small>`:'',btn:'Рассчитать',onBtn:()=>openCalc('fence'),
+    cap:`Модель №${n}${name?' '+name:''}, высота ${hTxt(h)}${parts?'. '+parts:''}`};
+}));
+/* плитка */
+gallery($('#cat-tile'),TILE_PHOTOS.map(([id,t,sp])=>({id,ar:'4/3',title:t,spec:sp,btn:'Узнать цену',onBtn:()=>askPrice(t,'Тротуарная плитка'),cap:`${t}. ${sp}`})));
+/* кирпич */
+(()=>{const g=$('#cat-brick');let cur='',batch=[];
+  const flush=()=>{if(batch.length)gallery(g,batch);batch=[]};
+  BRICKS.forEach(([n,grp,name,size,price])=>{
+    if(grp!==cur){flush();cur=grp;subhead(g,...BRICK_GROUPS[grp])}
+    const sz=size?size+' мм':'';
+    batch.push({id:n+'_0',ar:'1/1',title:name,spec:sz,price:price?`${rub(price)}<small> /шт</small>`:'',btn:'Заказать',
+      onBtn:()=>askPrice(`кирпич «${name}»${sz?' '+sz:''}`,'Облицовочный кирпич и природный камень'),cap:`${BRICK_GROUPS[grp][0]}: ${name}${sz?', '+sz:''}${price?', '+rub(price)+' за шт.':''}`});
+  });flush();})();
+/* стройматериалы */
+gallery($('#cat-mat'),MATS.map(([id,t,sp])=>({id,ar:'4/3',title:t,spec:sp,btn:'Узнать цену',onBtn:()=>askPrice(t,'Другое'),cap:sp?`${t}. ${sp}`:t})));
+/* наши работы */
+(()=>{const g=$('#w-tile .pgrid');const items=WORKS_TILE.map(id=>({id,ar:'4/3',cap:'Укладка тротуарной плитки, «Фрунзе 212»'}));
+  const list=items.map(it=>[IMG(it.id),it.cap]);let shown=0;const btn=$('#w-tile .more button');
+  const more=()=>{items.slice(shown,shown+12).forEach((it,k)=>{const i=shown+k;pcard(g,it).querySelector('.pz').onclick=()=>openLb(list,i)});shown+=12;$('#w-tile .more').hidden=shown>=items.length};
+  btn.onclick=more;more();})();
+gallery($('#w-paint .pgrid'),WORKS_PAINT.map(id=>({id,ar:'4/3',cap:'Покраска еврозабора'})));
+gallery($('#w-brick .pgrid'),WORKS_BRICK.map(([id,t])=>({id,ar:'4/3',title:t,cap:t+' из облицовочного кирпича'})));
+
+/* вкладки с несколькими панелями */
+function multiTabs(box){const btns=[...box.querySelectorAll('[data-panel]')];
+  btns.forEach(b=>b.onclick=()=>btns.forEach(x=>{const on=x===b;x.setAttribute('aria-selected',on);document.getElementById(x.dataset.panel).hidden=!on}));}
+multiTabs($('#cat-tabs'));multiTabs($('#work-tabs'));
+calc();
+
+/* ---------- form + copy ---------- */
+async function copyText(t,btn){
+  try{await navigator.clipboard.writeText(t);const o=btn.textContent;btn.textContent='Скопировано';setTimeout(()=>btn.textContent=o,1500)}
+  catch(e){btn.textContent='Выделите вручную'}
+}
+document.querySelectorAll('[data-copy]').forEach(b=>b.onclick=()=>copyText(document.getElementById(b.dataset.copy).textContent,b));
+$('#lead').addEventListener('submit',e=>{
+  e.preventDefault();
+  const ph=$('#l-phone').value.trim();
+  $('#l-err').hidden=ph.replace(/\D/g,'').length>=9;
+  if(!$('#l-err').hidden){$('#l-phone').focus();return}
+  const text=`Заявка с сайта: ${$('#l-topic').value}\nИмя: ${$('#l-name').value.trim()||'—'}\nТелефон: ${ph}\n${$('#l-msg').value.trim()}`;
+  const ok=$('#l-ok');ok.hidden=false;
+  ok.innerHTML=`<b>Заявка сформирована.</b> Это демо-версия сайта: здесь заявка никуда не отправляется. На хостинге форму подключают к почте или Telegram-боту.<pre></pre><button type="button" class="link-btn">Скопировать текст заявки</button> · <a class="link-btn" target="_blank" href="mailto:denisbegushev@yandex.ru?subject=${encodeURIComponent('Заявка: '+$('#l-topic').value)}&body=${encodeURIComponent(text)}">Открыть в почте</a><p class="spec" style="margin-top:8px">Или отправьте этот текст на denisbegushev@yandex.ru.</p>`;
+  ok.querySelector('pre').textContent=text;
+  ok.querySelector('button').onclick=ev=>copyText(text,ev.target);
+});
+</script>
+
+</html>
